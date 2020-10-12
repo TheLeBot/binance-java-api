@@ -1,20 +1,7 @@
 package com.binance.api.client;
 
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrder;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.TradeHistoryItem;
-import com.binance.api.client.domain.account.WithdrawHistory;
-import com.binance.api.client.domain.account.WithdrawResult;
-import com.binance.api.client.domain.account.request.AllOrdersRequest;
-import com.binance.api.client.domain.account.request.CancelOrderRequest;
-import com.binance.api.client.domain.account.request.CancelOrderResponse;
-import com.binance.api.client.domain.account.request.OrderRequest;
-import com.binance.api.client.domain.account.request.OrderStatusRequest;
+import com.binance.api.client.domain.account.*;
+import com.binance.api.client.domain.account.request.*;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.market.AggTrade;
@@ -201,6 +188,38 @@ public interface BinanceApiRestClient {
    * @return a list of all account orders
    */
   List<Order> getAllOrders(AllOrdersRequest orderRequest);
+
+  /**
+   * Send in a new OCO;
+   *
+   * @param oco
+   *            the OCO to submit
+   * @return a response containing details about the newly placed OCO.
+   */
+  NewOCOResponse newOCO(NewOCO oco);
+
+  /**
+   * Cancel an entire Order List
+   *
+   * @return CancelOrderListResponse object
+   */
+  CancelOrderListResponse cancelOrderList(CancelOrderListRequest cancelOrderListRequest);
+
+  /**
+   * Check an order list status
+   *
+   * @param orderListStatusRequest order list status request object
+   * @return an orderList
+   */
+  OrderList getOrderListStatus(OrderListStatusRequest orderListStatusRequest);
+
+  /**
+   * Get all list os orders
+   *
+   * @param allOrderListRequest all order list request object
+   * @return a list of OrderList objects
+   */
+  List<OrderList> getAllOrderList(AllOrderListRequest allOrderListRequest);
 
   /**
    * Get current account information.

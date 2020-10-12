@@ -163,6 +163,30 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   }
 
   @Override
+  public NewOCOResponse newOCO(NewOCO oco) {
+    return executeSync(binanceApiService.newOCO(oco.getSymbol(), oco.getListClientOrderId(), oco.getSide(),
+            oco.getQuantity(), oco.getLimitClientOrderId(), oco.getPrice(), oco.getLimitIcebergQty(),
+            oco.getStopClientOrderId(), oco.getStopPrice(), oco.getStopLimitPrice(), oco.getStopIcebergQty(),
+            oco.getStopLimitTimeInForce(), oco.getNewOrderRespType(), oco.getRecvWindow(), oco.getTimestamp()));
+  }
+
+  public CancelOrderListResponse cancelOrderList(CancelOrderListRequest cancelOrderListRequest) {
+    return executeSync(binanceApiService.cancelOrderList(cancelOrderListRequest.getSymbol(), cancelOrderListRequest.getOrderListId(),
+            cancelOrderListRequest.getListClientOrderId(), cancelOrderListRequest.getNewClientOrderId(),
+            cancelOrderListRequest.getRecvWindow(), cancelOrderListRequest.getTimestamp()));
+  }
+
+  public OrderList getOrderListStatus(OrderListStatusRequest orderListStatusRequest) {
+    return executeSync(binanceApiService.getOrderListStatus(orderListStatusRequest.getOrderListId(), orderListStatusRequest.getOrigClientOrderId(),
+            orderListStatusRequest.getRecvWindow(), orderListStatusRequest.getTimestamp()));
+  }
+
+  public List<OrderList> getAllOrderList(AllOrderListRequest allOrderListRequest) {
+    return executeSync(binanceApiService.getAllOrderList(allOrderListRequest.getFromId(), allOrderListRequest.getStartTime(),
+            allOrderListRequest.getEndTime(), allOrderListRequest.getLimit(), allOrderListRequest.getRecvWindow(), allOrderListRequest.getTimestamp()));
+  }
+
+  @Override
   public Account getAccount(Long recvWindow, Long timestamp) {
     return executeSync(binanceApiService.getAccount(recvWindow, timestamp));
   }
