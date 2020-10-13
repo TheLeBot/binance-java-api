@@ -1,11 +1,12 @@
 package com.binance.api.client.domain.account;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * A trade order to enter or exit a position.
@@ -57,6 +58,21 @@ public class NewOrder {
    * Used with stop orders.
    */
   private String stopPrice;
+
+  /**
+   * Used with OCO orders.
+   */
+  private String stopLimitPrice;
+
+  /**
+   * Optional client id for limit leg in OCO order
+   */
+  private String limitClientOrderId;
+
+  /**
+   * Optional client id for stop leg in OCO order
+   */
+  private String stopClientOrderId;
 
   /**
    * Used with iceberg orders.
@@ -127,6 +143,15 @@ public class NewOrder {
     return this;
   }
 
+  public NewOrder stopLimitPrice(String price) {
+    this.stopLimitPrice = price;
+    return this;
+  }
+
+  public String getStopLimitPrice() {
+    return this.stopLimitPrice;
+  }
+
   public TimeInForce getTimeInForce() {
     return timeInForce;
   }
@@ -169,6 +194,24 @@ public class NewOrder {
 
   public NewOrder newClientOrderId(String newClientOrderId) {
     this.newClientOrderId = newClientOrderId;
+    return this;
+  }
+
+  public String getLimitClientOrderId() {
+    return limitClientOrderId;
+  }
+
+  public NewOrder limitClientOrderId(String limitClientOrderId) {
+    this.limitClientOrderId = limitClientOrderId;
+    return this;
+  }
+
+  public String getStopClientOrderId() {
+    return stopClientOrderId;
+  }
+
+  public NewOrder stopClientOrderId(String stopClientOrderId) {
+    this.stopClientOrderId = stopClientOrderId;
     return this;
   }
 
@@ -245,6 +288,52 @@ public class NewOrder {
   }
 
   /**
+   * Creates a One-Cancels-Other buy order. Note that when the stopPrice is
+   * reached the exchange will execute a market buy up to the stopLimitPrice but
+   * you will still be considered the market maker.
+   *
+   * @param symbol         the coin you want to buy
+   * @param quantity       amount to buy
+   * @param price          the limit order price (should be lower than the
+   *                       stopPrice and current price)
+   * @param stopPrice      higher price that triggers buying order at the
+   *                       stopLimitPrice
+   * @param stopLimitPrice the limit order price that will be put to the order
+   *                       book when the stopPrice is reached.
+   * @return the new order
+   */
+  public static NewOrder ocoBuy(String symbol, String quantity, String price, String stopPrice, String stopLimitPrice) {
+    NewOrder buy = limitBuy(symbol, TimeInForce.GTC, quantity, price);
+    buy.type(OrderType.OCO);
+    buy.stopPrice(stopPrice);
+    buy.stopLimitPrice(stopLimitPrice);
+    return buy;
+  }
+
+  /**
+   * Creates a One-Cancels-Other sell order. Note that when the stopPrice is
+   * reached the exchange will execute a market sell at the stopLimitPrice but
+   * you will still be considered the market maker.
+   *
+   * @param symbol         the coin you want to sell
+   * @param quantity       amount to sell
+   * @param price          the limit order price (should be higher than the
+   *                       stopPrice and current price)
+   * @param stopPrice      lower price that triggers buying order at the
+   *                       stopLimitPrice
+   * @param stopLimitPrice the limit order price that will be put to the order
+   *                       book when the stopPrice is reached.
+   * @return the new order
+   */
+  public static NewOrder ocoSell(String symbol, String quantity, String price, String stopPrice, String stopLimitPrice) {
+    NewOrder sell = limitSell(symbol, TimeInForce.GTC, quantity, price);
+    sell.type(OrderType.OCO);
+    sell.stopPrice(stopPrice);
+    sell.stopLimitPrice(stopLimitPrice);
+    return sell;
+  }
+
+  /**
    * Places a LIMIT sell order for the given <code>quantity</code> and <code>price</code>.
    *
    * @return a new order which is pre-configured with LIMIT as the order type and SELL as the order side.
@@ -256,19 +345,20 @@ public class NewOrder {
   @Override
   public String toString() {
     return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
-        .append("symbol", symbol)
-        .append("side", side)
-        .append("type", type)
-        .append("timeInForce", timeInForce)
-        .append("quantity", quantity)
-        .append("quoteOrderQty", quoteOrderQty)
-        .append("price", price)
-        .append("newClientOrderId", newClientOrderId)
-        .append("stopPrice", stopPrice)
-        .append("icebergQty", icebergQty)
-        .append("newOrderRespType", newOrderRespType)
-        .append("recvWindow", recvWindow)
-        .append("timestamp", timestamp)
-        .toString();
+            .append("symbol", symbol)
+            .append("side", side)
+            .append("type", type)
+            .append("price", price)
+            .append("stopLimitPrice", stopLimitPrice)
+            .append("stopPrice", stopPrice)
+            .append("quantity", quantity)
+            .append("quoteOrderQty", quoteOrderQty)
+            .append("newClientOrderId", newClientOrderId)
+            .append("icebergQty", icebergQty)
+            .append("newOrderRespType", newOrderRespType)
+            .append("recvWindow", recvWindow)
+            .append("timestamp", timestamp)
+            .append("timeInForce", timeInForce)
+            .toString();
   }
 }

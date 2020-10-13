@@ -1,21 +1,28 @@
 package com.binance.api.client.domain.account.request;
 
 import com.binance.api.client.constant.BinanceApiConstants;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class OrderListStatusRequest {
+public class OcoOrderStatusRequest {
 
-    private Long orderListId;
+    Long orderListId;
 
-    private String origClientOrderId;
+    String origClientOrderId;
 
-    private Long recvWindow;
+    Long recvWindow;
 
-    private Long timestamp;
+    Long timestamp;
 
-    public OrderListStatusRequest(Long orderListId) {
-        this.orderListId = orderListId;
+    public OcoOrderStatusRequest(String origClientOrderId) {
+        this();
+        this.origClientOrderId = origClientOrderId;
+    }
+
+    public OcoOrderStatusRequest(Long orderId) {
+        this();
+        orderListId = orderId;
+    }
+
+    private OcoOrderStatusRequest() {
         this.timestamp = System.currentTimeMillis();
         this.recvWindow = BinanceApiConstants.DEFAULT_RECEIVING_WINDOW;
     }
@@ -50,6 +57,12 @@ public class OrderListStatusRequest {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "OcoOrderStatusRequest [orderListId=" + orderListId + ", origClientOrderId=" + origClientOrderId + ", recvWindow=" + recvWindow
+                + ", timestamp=" + timestamp + "]";
     }
 
 }

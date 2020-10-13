@@ -190,36 +190,30 @@ public interface BinanceApiRestClient {
   List<Order> getAllOrders(AllOrdersRequest orderRequest);
 
   /**
-   * Send in a new OCO;
+   * Send in a new OCO order.
    *
-   * @param oco
-   *            the OCO to submit
-   * @return a response containing details about the newly placed OCO.
+   * @param order the new order to submit.
+   * @return a response containing details about the newly placed order.
    */
-  NewOCOResponse newOCO(NewOCO oco);
+  OcoOrderResponse newOcoOrder(NewOrder order);
 
   /**
-   * Cancel an entire Order List
+   * Check an OCO order's status. Note that binance will not return order leg
+   * details in this call (orderReports will be null). You will need to use
+   * individual leg ids and {@link #getOrderStatus(OrderStatusRequest)} to get
+   * details about individual legs.
    *
-   * @return CancelOrderListResponse object
+   * @param statusRequest status request object
+   * @return an order
    */
-  CancelOrderListResponse cancelOrderList(CancelOrderListRequest cancelOrderListRequest);
+  OcoOrderResponse getOcoOrderStatus(OcoOrderStatusRequest statusRequest);
 
   /**
-   * Check an order list status
-   *
-   * @param orderListStatusRequest order list status request object
-   * @return an orderList
+   * Cancel an active OCO order. Both legs will be cancelled.
+   * @param cancelOrderRequest order request parameters
+   * @return order execution status
    */
-  OrderList getOrderListStatus(OrderListStatusRequest orderListStatusRequest);
-
-  /**
-   * Get all list os orders
-   *
-   * @param allOrderListRequest all order list request object
-   * @return a list of OrderList objects
-   */
-  List<OrderList> getAllOrderList(AllOrderListRequest allOrderListRequest);
+  OcoOrderResponse cancelOcoOrder(CancelOrderRequest cancelOrderRequest);
 
   /**
    * Get current account information.

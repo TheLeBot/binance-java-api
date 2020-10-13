@@ -157,4 +157,11 @@ public class SymbolFilter {
   public void setLimit(String limit) {
     this.limit = limit;
   }
+
+  @Override
+  public String toString() {
+    return "SymbolFilter [filterType=" + filterType + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + ", tickSize=" + tickSize
+            + ", minQty=" + minQty + ", maxQty=" + maxQty + ", stepSize=" + stepSize + ", minNotional=" + minNotional
+            + ", maxNumAlgoOrders=" + maxNumAlgoOrders + ", limit=" + limit + "]";
+  }
 }
