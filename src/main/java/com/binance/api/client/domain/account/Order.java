@@ -31,6 +31,11 @@ public class Order {
   private String clientOrderId;
 
   /**
+   * Collective order id to which this order belongs (for OCO order legs)
+   */
+  private String orderListId;
+
+  /**
    * Price.
    */
   private String price;
@@ -237,12 +242,21 @@ public class Order {
     this.origQuoteOrderQty = origQuoteOrderQty;
   }
 
+  public String getOrderListId() {
+    return orderListId;
+  }
+
+  public void setOrderListId(String orderListId) {
+    this.orderListId = orderListId;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("symbol", symbol)
         .append("orderId", orderId)
         .append("clientOrderId", clientOrderId)
+        .append("orderListId", orderListId)
         .append("price", price)
         .append("origQty", origQty)
         .append("executedQty", executedQty)

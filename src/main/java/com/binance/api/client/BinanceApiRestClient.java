@@ -1,20 +1,7 @@
 package com.binance.api.client;
 
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrder;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.TradeHistoryItem;
-import com.binance.api.client.domain.account.WithdrawHistory;
-import com.binance.api.client.domain.account.WithdrawResult;
-import com.binance.api.client.domain.account.request.AllOrdersRequest;
-import com.binance.api.client.domain.account.request.CancelOrderRequest;
-import com.binance.api.client.domain.account.request.CancelOrderResponse;
-import com.binance.api.client.domain.account.request.OrderRequest;
-import com.binance.api.client.domain.account.request.OrderStatusRequest;
+import com.binance.api.client.domain.account.*;
+import com.binance.api.client.domain.account.request.*;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.market.AggTrade;
@@ -201,6 +188,32 @@ public interface BinanceApiRestClient {
    * @return a list of all account orders
    */
   List<Order> getAllOrders(AllOrdersRequest orderRequest);
+
+  /**
+   * Send in a new OCO order.
+   *
+   * @param order the new order to submit.
+   * @return a response containing details about the newly placed order.
+   */
+  OcoOrderResponse newOcoOrder(NewOrder order);
+
+  /**
+   * Check an OCO order's status. Note that binance will not return order leg
+   * details in this call (orderReports will be null). You will need to use
+   * individual leg ids and {@link #getOrderStatus(OrderStatusRequest)} to get
+   * details about individual legs.
+   *
+   * @param statusRequest status request object
+   * @return an order
+   */
+  OcoOrderResponse getOcoOrderStatus(OcoOrderStatusRequest statusRequest);
+
+  /**
+   * Cancel an active OCO order. Both legs will be cancelled.
+   * @param cancelOrderRequest order request parameters
+   * @return order execution status
+   */
+  OcoOrderResponse cancelOcoOrder(CancelOrderRequest cancelOrderRequest);
 
   /**
    * Get current account information.

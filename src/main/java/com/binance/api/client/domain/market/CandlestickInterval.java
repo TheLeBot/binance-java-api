@@ -2,6 +2,10 @@ package com.binance.api.client.domain.market;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Kline/Candlestick intervals.
  * m -> minutes; h -> hours; d -> days; w -> weeks; M -> months
@@ -32,5 +36,13 @@ public enum CandlestickInterval {
 
   public String getIntervalId() {
     return intervalId;
+  }
+
+  public static CandlestickInterval getInterval(String psKey) {
+    return Arrays.stream(CandlestickInterval.values()).filter(interval -> interval.getIntervalId().equalsIgnoreCase(psKey)).findFirst().orElse(null);
+  }
+
+  public static List<String> getKeys() {
+    return Arrays.stream(CandlestickInterval.values()).map(CandlestickInterval::name).collect(Collectors.toList());
   }
 }

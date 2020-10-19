@@ -47,6 +47,13 @@ public class CancelOrderResponse {
   public String getExecutedQty() {
     return executedQty;
   }
+  public void setExecutedQty(String executedQty) {
+    this.executedQty = executedQty;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
   public String getOrderId() {
     return orderId;
