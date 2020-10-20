@@ -2,6 +2,7 @@ package com.binance.api.client;
 
 import com.binance.api.client.domain.event.*;
 import com.binance.api.client.domain.market.CandlestickInterval;
+import org.asynchttpclient.ws.WebSocket;
 
 import java.io.Closeable;
 import java.util.List;
@@ -18,7 +19,7 @@ public interface BinanceApiWebSocketClient extends Closeable {
      * @param callback  the callback to call on new events
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
-    Closeable onDepthEvent(String symbols, BinanceApiCallback<DepthEvent> callback);
+    WebSocket onDepthEvent(String symbols, BinanceApiCallback<DepthEvent> callback);
 
     /**
      * Open a new web socket to receive {@link CandlestickEvent candlestickEvents} on a callback.
@@ -28,7 +29,7 @@ public interface BinanceApiWebSocketClient extends Closeable {
      * @param callback  the callback to call on new events
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
-    Closeable onCandlestickEvent(String symbols, CandlestickInterval interval, BinanceApiCallback<CandlestickEvent> callback);
+    WebSocket onCandlestickEvent(String symbols, CandlestickInterval interval, BinanceApiCallback<CandlestickEvent> callback);
 
     /**
      * Open a new web socket to receive {@link AggTradeEvent aggTradeEvents} on a callback.
@@ -37,7 +38,7 @@ public interface BinanceApiWebSocketClient extends Closeable {
      * @param callback  the callback to call on new events
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
-    Closeable onAggTradeEvent(String symbols, BinanceApiCallback<AggTradeEvent> callback);
+    WebSocket onAggTradeEvent(String symbols, BinanceApiCallback<AggTradeEvent> callback);
 
     /**
      * Open a new web socket to receive {@link TradeEvent tradeEvents} on a callback.
@@ -55,7 +56,7 @@ public interface BinanceApiWebSocketClient extends Closeable {
      * @param callback  the callback to call on new events
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
-    Closeable onUserDataUpdateEvent(String listenKey, BinanceApiCallback<UserDataUpdateEvent> callback);
+    WebSocket onUserDataUpdateEvent(String listenKey, BinanceApiCallback<UserDataUpdateEvent> callback);
 
     /**
      * Open a new web socket to receive {@link AllMarketTickersEvent allMarketTickersEvents} on a callback.
@@ -63,7 +64,7 @@ public interface BinanceApiWebSocketClient extends Closeable {
      * @param callback the callback to call on new events
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
-    Closeable onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback);
+    WebSocket onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback);
 
     /**
      * Open a new web socket to receive {@link BookTickerEvent bookTickerEvents} on a callback.

@@ -1,9 +1,13 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.market.AggTrade;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +33,10 @@ public class AggTradesCacheExample {
    * Initializes the aggTrades cache by using the REST API.
    */
   private void initializeAggTradesCache(String symbol) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(asyncHttpClient);
+
     BinanceApiRestClient client = factory.newRestClient();
     List<AggTrade> aggTrades = client.getAggTrades(symbol.toUpperCase());
 
@@ -43,7 +50,9 @@ public class AggTradesCacheExample {
    * Begins streaming of agg trades events.
    */
   private void startAggTradesEventStreaming(String symbol) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(asyncHttpClient);
     BinanceApiWebSocketClient client = factory.newWebSocketClient();
 
     client.onAggTradeEvent(symbol.toLowerCase(), response -> {

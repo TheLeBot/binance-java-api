@@ -1,7 +1,11 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiWebSocketClient;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 /**
  * All market tickers channel examples.
@@ -11,11 +15,11 @@ import com.binance.api.client.BinanceApiWebSocketClient;
 public class AllMarketTickersExample {
 
   public static void main(String[] args) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 123512);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(asyncHttpClient);
     BinanceApiWebSocketClient client = factory.newWebSocketClient();
 
-    client.onAllMarketTickersEvent(event -> {
-      System.out.println(event);
-    });
+    client.onAllMarketTickersEvent(System.out::println);
   }
 }

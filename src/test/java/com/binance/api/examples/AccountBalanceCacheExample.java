@@ -1,10 +1,14 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.account.Account;
 import com.binance.api.client.domain.account.AssetBalance;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,7 +33,11 @@ public class AccountBalanceCacheExample {
   private final String listenKey;
 
   public AccountBalanceCacheExample(String apiKey, String secret) {
-    this.clientFactory = BinanceApiClientFactory.newInstance(apiKey, secret);
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(apiKey, secret, asyncHttpClient);
+
+    this.clientFactory = factory;
     this.listenKey = initializeAssetBalanceCacheAndStreamSession();
     startAccountBalanceEventStreaming(listenKey);
   }

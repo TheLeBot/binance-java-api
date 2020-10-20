@@ -1,8 +1,12 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.market.CandlestickInterval;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.io.IOException;
 
@@ -14,7 +18,10 @@ import java.io.IOException;
 public class MarketDataStreamExample {
 
   public static void main(String[] args) throws InterruptedException, IOException {
-    BinanceApiWebSocketClient client = BinanceApiClientFactory.newInstance().newWebSocketClient();
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(asyncHttpClient);
+    BinanceApiWebSocketClient client = factory.newWebSocketClient();
 
     // Listen for aggregated trade events for ETH/BTC
     client.onAggTradeEvent("ethbtc", response -> System.out.println(response));

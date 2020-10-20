@@ -1,5 +1,6 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
@@ -7,16 +8,14 @@ import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.event.DepthEvent;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.OrderBookEntry;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.ws.WebSocket;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -51,12 +50,14 @@ public class DepthCacheExample {
   private final Map<String, NavigableMap<BigDecimal, BigDecimal>> depthCache = new HashMap<>();
 
   private long lastUpdateId = -1;
-  private volatile Closeable webSocket;
+  private volatile WebSocket webSocket;
 
   public DepthCacheExample(String symbol) {
     this.symbol = symbol;
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(asyncHttpClient);
 
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
     this.wsClient = factory.newWebSocketClient();
     this.restClient = factory.newRestClient();
 
@@ -189,7 +190,11 @@ public class DepthCacheExample {
   }
 
   public void close() throws IOException {
-    webSocket.close();
+    try {
+        webSocket.sendCloseFrame().get();
+    } catch (Exception any) {
+        throw new IOException(any);
+    }
   }
 
   /**

@@ -1,13 +1,14 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiClientFactory;
-import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.general.FilterType;
 import com.binance.api.client.domain.general.SymbolFilter;
 import com.binance.api.client.domain.general.SymbolInfo;
-
-import java.util.List;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 /**
  * Examples on how to use the general endpoints.
@@ -15,7 +16,9 @@ import java.util.List;
 public class GeneralEndpointsExampleAsync {
 
   public static void main(String[] args) throws InterruptedException {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+    final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(asyncHttpClient);
     BinanceApiAsyncRestClient client = factory.newAsyncRestClient();
 
     // Test connectivity

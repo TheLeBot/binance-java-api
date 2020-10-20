@@ -30,6 +30,7 @@ import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.util.List;
 
@@ -42,8 +43,8 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
 
   private final BinanceApiService binanceApiService;
 
-  public BinanceApiAsyncRestClientImpl(String apiKey, String secret) {
-    binanceApiService = createService(BinanceApiService.class, apiKey, secret);
+  public BinanceApiAsyncRestClientImpl(String apiKey, String secret, AsyncHttpClient client) {
+    binanceApiService = createService(BinanceApiService.class, client, apiKey, secret);
   }
 
   // General endpoints
