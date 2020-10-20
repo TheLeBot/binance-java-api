@@ -1,10 +1,14 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiMarginRestClient;
 import com.binance.api.client.domain.account.MarginTransaction;
 import com.binance.api.client.domain.account.MaxBorrowableQueryResult;
 import com.binance.api.client.domain.account.RepayQueryResult;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 /**
  * Examples on how to get margin account information.
@@ -12,8 +16,11 @@ import com.binance.api.client.domain.account.RepayQueryResult;
 public class MarginAccountEndpointsLoanQueryExample {
 
     public static void main(String[] args) {
-        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "YOUR_SECRET");
+        final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+        final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "YOUR_SECRET", asyncHttpClient);
         BinanceApiMarginRestClient client = factory.newMarginRestClient();
+
         MaxBorrowableQueryResult usdt = client.queryMaxBorrowable("USDT");
         System.out.println(usdt.getAmount());
         MaxBorrowableQueryResult bnb = client.queryMaxBorrowable("BNB");

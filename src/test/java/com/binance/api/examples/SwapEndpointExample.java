@@ -1,8 +1,12 @@
 package com.binance.api.examples;
 
+import com.binance.api.HttpUtils;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiSwapRestClient;
 import com.binance.api.client.domain.account.*;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.util.List;
 
@@ -13,8 +17,11 @@ public class SwapEndpointExample {
 
     public static void main(String[] args) {
 
-        BinanceApiClientFactory binanceApiClientFactory = BinanceApiClientFactory.newInstance(API_KEY, SECRET_KEY);
-        BinanceApiSwapRestClient swapClient = binanceApiClientFactory.newSwapRestClient();
+        final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
+        final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
+        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "YOUR_SECRET", asyncHttpClient);
+        BinanceApiSwapRestClient swapClient = factory.newSwapRestClient();
+
         List<Pool> pools = swapClient.listAllSwapPools();
         for(Pool pool:pools) {
             System.out.println(pool);

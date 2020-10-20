@@ -10,6 +10,7 @@ import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class BinanceApiAsyncMarginRestClientImpl implements BinanceApiAsyncMargi
 
   private final BinanceApiService binanceApiService;
 
-  public BinanceApiAsyncMarginRestClientImpl(String apiKey, String secret) {
-    binanceApiService = createService(BinanceApiService.class, apiKey, secret);
+  public BinanceApiAsyncMarginRestClientImpl(String apiKey, String secret, AsyncHttpClient httpClient) {
+    binanceApiService = createService(BinanceApiService.class, httpClient, apiKey, secret);
   }
 
   // Margin Account endpoints

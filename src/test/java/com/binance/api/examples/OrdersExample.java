@@ -26,7 +26,6 @@ public class OrdersExample {
   public static void main(String[] args) {
     final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
     final AsyncHttpClient asyncHttpClient = HttpUtils.newAsyncHttpClient(eventLoopGroup, 65536);
-
     BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "YOUR_SECRET", asyncHttpClient);
     BinanceApiRestClient client = factory.newRestClient();
 

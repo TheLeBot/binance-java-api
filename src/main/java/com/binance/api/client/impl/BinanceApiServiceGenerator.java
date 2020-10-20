@@ -2,6 +2,7 @@ package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiError;
 import com.binance.api.client.config.BinanceApiConfig;
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.exception.BinanceApiException;
 import okhttp3.ResponseBody;
 import org.asynchttpclient.AsyncHttpClient;
@@ -36,7 +37,7 @@ public class BinanceApiServiceGenerator {
         AsyncHttpClientCallFactory.AsyncHttpClientCallFactoryBuilder callFactoryBuilder =
                 AsyncHttpClientCallFactory.builder().httpClient(httpClient);
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .baseUrl(BinanceApiConstants.API_BASE_URL)
+                .baseUrl(BinanceApiConfig.getApiBaseUrl())
                 .addConverterFactory(converterFactory)
                 .validateEagerly(true);
         BinanceCallCustomizer.customize(apiKey, secret, callFactoryBuilder);
