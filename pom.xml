@@ -6,7 +6,7 @@
 
   <groupId>com.binance.api</groupId>
   <artifactId>binance-api-client</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.3</version>
   <licenses>
     <license>
       <name>The MIT License</name>
@@ -15,7 +15,8 @@
   </licenses>
 
   <properties>
-    <com.squareup.retrofit2.version>2.4.0</com.squareup.retrofit2.version>
+    <com.squareup.retrofit2.version>2.9.0</com.squareup.retrofit2.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -48,7 +49,7 @@
   </dependencies>
 
   <build>
-    <finalName>Binance-API</finalName>
+    <finalName>${project.artifactId}-${project.version}</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
