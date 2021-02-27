@@ -263,8 +263,12 @@ public interface BinanceApiAsyncRestClient {
    * @param amount amount to withdraw
    * @param name description/alias of the address
    * @param addressTag Secondary address identifier for coins like XRP,XMR etc.
+   * @param withdrawOrderId client customize id for withdraw order
+   * @param network the transfer network
+   * @param transactionFeeFlag When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.
    */
-  void withdraw(String asset, String address, String amount, String name, String addressTag, BinanceApiCallback<WithdrawResult> callback);
+  void withdraw(String asset, String address, String amount, String name, String addressTag, String withdrawOrderId,
+                String network, Boolean transactionFeeFlag, BinanceApiCallback<WithdrawResult> callback);
 
   /**
    * Fetch account deposit history.
