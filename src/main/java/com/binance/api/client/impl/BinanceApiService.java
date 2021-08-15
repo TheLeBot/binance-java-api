@@ -185,9 +185,11 @@ public interface BinanceApiService {
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @POST("/wapi/v3/withdraw.html")
-    Call<WithdrawResult> withdraw(@Query("asset") String asset, @Query("address") String address, @Query("amount") String amount, @Query("name") String name, @Query("addressTag") String addressTag,
-                                  @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
-
+    Call<WithdrawResult> withdraw(@Query("asset") String asset, @Query("address") String address, @Query("amount") String amount,
+                                  @Query("name") String name, @Query("addressTag") String addressTag,
+                                  @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp,
+                                  @Query("withdrawOrderId") String withdrawOrderId, @Query("network") String network,
+                                  @Query("transactionFeeFlag") Boolean transactionFeeFlag);
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/wapi/v3/depositHistory.html")
