@@ -277,6 +277,14 @@ public interface BinanceApiRestClient {
   DepositHistory getDepositHistory(String asset);
 
   /**
+   * Fetch account deposit history.
+   *
+   * @return deposit history, containing a list of deposits
+   */
+  DepositHistory getDepositHistory(String coin, int status, Long startTime, Long endTime,
+                                   int offset, int limit);
+
+  /**
    * Fetch account withdraw history.
    *
    * @return withdraw history, containing a list of withdrawals
@@ -284,11 +292,19 @@ public interface BinanceApiRestClient {
   WithdrawHistory getWithdrawHistory(String asset);
 
   /**
+   * Fetch account withdraw history.
+   *
+   * @return withdraw history, containing a list of withdrawals
+   */
+  WithdrawHistory getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
+                                     int offset, int limit);
+
+  /**
    * Fetch deposit address.
    *
    * @return deposit address for a given asset.
    */
-  DepositAddress getDepositAddress(String asset);
+  DepositAddress getDepositAddress(String asset, String network);
 
   // User stream endpoints
 
