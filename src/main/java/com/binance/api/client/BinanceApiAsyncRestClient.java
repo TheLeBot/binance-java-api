@@ -1,15 +1,6 @@
 package com.binance.api.client;
 
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrder;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.TradeHistoryItem;
-import com.binance.api.client.domain.account.WithdrawHistory;
-import com.binance.api.client.domain.account.WithdrawResult;
+import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.CancelOrderResponse;
@@ -276,7 +267,7 @@ public interface BinanceApiAsyncRestClient {
    *
    * @param callback the callback that handles the response and returns the deposit history
    */
-  void getDepositHistory(String asset, BinanceApiCallback<DepositHistory> callback);
+  void getDepositHistory(String coin, BinanceApiCallback<List<Deposit>> callback);
 
   /**
    * Fetch account deposit history.
@@ -284,14 +275,14 @@ public interface BinanceApiAsyncRestClient {
    * @param callback the callback that handles the response and returns the deposit history
    */
   void getDepositHistory(String coin, int status, Long startTime, Long endTime,
-                         int offset, int limit, BinanceApiCallback<DepositHistory> callback);
+                         int offset, int limit, BinanceApiCallback<List<Deposit>> callback);
 
   /**
    * Fetch account withdraw history.
    *
    * @param callback the callback that handles the response and returns the withdraw history
    */
-  void getWithdrawHistory(String asset, BinanceApiCallback<WithdrawHistory> callback);
+  void getWithdrawHistory(String coin, BinanceApiCallback<List<Withdraw>> callback);
 
   /**
    * Fetch account withdraw history.
@@ -299,7 +290,7 @@ public interface BinanceApiAsyncRestClient {
    * @param callback the callback that handles the response and returns the withdraw history
    */
   void getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
-                          int offset, int limit, BinanceApiCallback<WithdrawHistory> callback);
+                          int offset, int limit, BinanceApiCallback<List<Withdraw>> callback);
 
   /**
    * Fetch deposit address.

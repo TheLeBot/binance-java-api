@@ -10,17 +10,7 @@ import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrder;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.OcoOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.TradeHistoryItem;
-import com.binance.api.client.domain.account.WithdrawHistory;
-import com.binance.api.client.domain.account.WithdrawResult;
+import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.CancelOrderResponse;
@@ -249,26 +239,31 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   }
 
   @Override
-  public DepositHistory getDepositHistory(String coin) {
+  public List<Deposit> getDepositHistory(String coin) {
     return executeSync(binanceApiService.getDepositHistory(coin, 0, null, null, 0, 1000,
             BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
   }
+
+  /**
+   * Fetch account deposit history.
+   *
+   * @return deposit history, containing a list of deposits
+   */
   @Override
-  public DepositHistory getDepositHistory(String coin, int status, Long startTime, Long endTime,
-                                          int offset, int limit) {
-    return executeSync(binanceApiService.getDepositHistory(coin, status, startTime, endTime, offset, limit,
-            BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+  public List<Deposit> getDepositHistory(String coin, int status, Long startTime, Long endTime, int offset, int limit) {
+      return executeSync(binanceApiService.getDepositHistory(coin, status, startTime, endTime, offset, limit,
+              BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
   }
 
   @Override
-  public WithdrawHistory getWithdrawHistory(String coin) {
+  public List<Withdraw> getWithdrawHistory(String coin) {
     return executeSync(binanceApiService.getWithdrawHistory(coin, 0, null, null, 0, 1000,
             BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
   }
 
   @Override
-  public WithdrawHistory getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
-                                            int offset, int limit) {
+  public List<Withdraw> getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
+                                           int offset, int limit) {
     return executeSync(binanceApiService.getWithdrawHistory(coin, status, startTime, endTime, offset, limit,
             BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
   }

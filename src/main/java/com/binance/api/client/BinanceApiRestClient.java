@@ -274,30 +274,30 @@ public interface BinanceApiRestClient {
    *
    * @return deposit history, containing a list of deposits
    */
-  DepositHistory getDepositHistory(String asset);
+  List<Deposit> getDepositHistory(String coin);
 
   /**
    * Fetch account deposit history.
    *
    * @return deposit history, containing a list of deposits
    */
-  DepositHistory getDepositHistory(String coin, int status, Long startTime, Long endTime,
-                                   int offset, int limit);
+  List<Deposit> getDepositHistory(String coin, int status, Long startTime, Long endTime,
+                                  int offset, int limit);
 
   /**
    * Fetch account withdraw history.
    *
    * @return withdraw history, containing a list of withdrawals
    */
-  WithdrawHistory getWithdrawHistory(String asset);
+  List<Withdraw> getWithdrawHistory(String coin);
 
   /**
    * Fetch account withdraw history.
    *
    * @return withdraw history, containing a list of withdrawals
    */
-  WithdrawHistory getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
-                                     int offset, int limit);
+  List<Withdraw> getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
+                                    int offset, int limit);
 
   /**
    * Fetch deposit address.
