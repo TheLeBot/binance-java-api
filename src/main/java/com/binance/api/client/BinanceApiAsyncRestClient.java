@@ -265,9 +265,17 @@ public interface BinanceApiAsyncRestClient {
   /**
    * Fetch account deposit history.
    *
+   * @param coin Symbol to work with
    * @param callback the callback that handles the response and returns the deposit history
    */
   void getDepositHistory(String coin, BinanceApiCallback<List<Deposit>> callback);
+
+  /**
+   * Fetch account deposit history.
+   *
+   * @param callback the callback that handles the response and returns the deposit history
+   */
+  void getDepositHistory(BinanceApiCallback<List<Deposit>> callback);
 
   /**
    * Fetch account deposit history.
@@ -282,6 +290,14 @@ public interface BinanceApiAsyncRestClient {
    *
    * @param callback the callback that handles the response and returns the withdraw history
    */
+  void getWithdrawHistory(BinanceApiCallback<List<Withdraw>> callback);
+
+  /**
+   * Fetch account withdraw history.
+   *
+   * @param coin Symbol to work with
+   * @param callback the callback that handles the response and returns the withdraw history
+   */
   void getWithdrawHistory(String coin, BinanceApiCallback<List<Withdraw>> callback);
 
   /**
@@ -289,7 +305,7 @@ public interface BinanceApiAsyncRestClient {
    *
    * @param callback the callback that handles the response and returns the withdraw history
    */
-  void getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
+  void getWithdrawHistory(String coin, String withdrawOrderId, int status, Long startTime, Long endTime,
                           int offset, int limit, BinanceApiCallback<List<Withdraw>> callback);
 
   /**
