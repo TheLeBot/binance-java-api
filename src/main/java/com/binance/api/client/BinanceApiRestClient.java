@@ -274,6 +274,15 @@ public interface BinanceApiRestClient {
    *
    * @return deposit history, containing a list of deposits
    */
+  List<Deposit> getDepositHistory();
+
+  /**
+   * Fetch account deposit history.
+   *
+   * @param coin Symbol to work with
+   *
+   * @return deposit history, containing a list of deposits
+   */
   List<Deposit> getDepositHistory(String coin);
 
   /**
@@ -289,15 +298,30 @@ public interface BinanceApiRestClient {
    *
    * @return withdraw history, containing a list of withdrawals
    */
+  List<Withdraw> getWithdrawHistory();
+
+  /**
+   * Fetch account withdraw history.
+   *
+   * @param coin Symbol to work with
+   *
+   * @return withdraw history, containing a list of withdrawals
+   */
   List<Withdraw> getWithdrawHistory(String coin);
 
   /**
    * Fetch account withdraw history.
    *
-   * @return withdraw history, containing a list of withdrawals
+   * @param coin Symbol
+   * @param withdrawOrderId Withdraw order id if any
+   * @param status Status
+   * @param startTime Default: 90 days from current timestamp
+   * @param endTime  Default: current timestamp
+   * @param offset Number of days as offset to start getting
+   * @param limit Default 1000, max 1000
+   * @return List<Withdraw> withdraw history, containing a list of withdrawals
    */
-  List<Withdraw> getWithdrawHistory(String coin, int status, Long startTime, Long endTime,
-                                    int offset, int limit);
+  List<Withdraw> getWithdrawHistory(String coin, String withdrawOrderId, int status, Long startTime, Long endTime, int offset, int limit);
 
   /**
    * Fetch deposit address.

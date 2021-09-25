@@ -21,7 +21,7 @@ public class WithdrawHistoryDeserializerTest {
   public void testWithdrawHistoryDeserialziation() {
     String withdrawHistoryJson = "{\"withdrawList\":\n" +
         "[{\"amount\":0.1,\"address\":\"0x456\",\"successTime\":\"2017-10-13 21:20:09\",\n" +
-        "\"txId\":\"0x123\",\"id\":\"1\",\"asset\":\"ETH\",\"applyTime\":\"2017-10-13 20:59:38\",\"userId\":\"1\",\"status\":6}],\n" +
+        "\"txId\":\"0x123\",\"id\":\"1\",\"coin\":\"ETH\",\"applyTime\":\"2017-10-13 20:59:38\",\"userId\":\"1\",\"status\":6}],\n" +
         "\"success\":true}";
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -32,9 +32,8 @@ public class WithdrawHistoryDeserializerTest {
       Withdraw withdraw = withdrawList.get(0);
       assertEquals(withdraw.getAmount(), "0.1");
       assertEquals(withdraw.getAddress(), "0x456");
-      assertEquals(withdraw.getAsset(), "ETH");
+      assertEquals(withdraw.getCoin(), "ETH");
       assertEquals(withdraw.getApplyTime(), "2017-10-13 20:59:38");
-      assertEquals(withdraw.getSuccessTime(), "2017-10-13 21:20:09");
       assertEquals(withdraw.getTxId(), "0x123");
       assertEquals(withdraw.getId(), "1");
     } catch (IOException e) {
