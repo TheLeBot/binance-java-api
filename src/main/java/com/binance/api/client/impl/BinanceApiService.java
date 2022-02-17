@@ -209,6 +209,11 @@ public interface BinanceApiService {
     @GET("/sapi/v1/capital/deposit/address")
     Call<DepositAddress> getDepositAddress(@Query("coin") String asset, @Query("network") String network, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
+    // asset endpoints
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @POST("/sapi/v1/asset/transfer")
+    Call<UniversalTransferResult> universalTransfer(@Query("type") String type, @Query("asset") String asset, @Query("amount") String amount, @Query("fromSymbol") String fromSymbol, @Query("toSymbol") String toSymbol, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
     // User stream endpoints
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)

@@ -10,6 +10,7 @@ import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
+import com.binance.api.client.domain.UniversalTransferType;
 import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
@@ -282,6 +283,16 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   public DepositAddress getDepositAddress(String asset, String network) {
     return executeSync(binanceApiService.getDepositAddress(asset, network, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
             System.currentTimeMillis()));
+  }
+
+  @Override
+  public UniversalTransferResult universalTransfer( UniversalTransferType type, String asset, String amount, String fromSymbol, String toSymbol) {
+    return executeSync(binanceApiService.universalTransfer(type.toString(), asset, amount, fromSymbol, toSymbol, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+  }
+
+  @Override
+  public UniversalTransferResult universalTransfer( UniversalTransferType type, String asset, String amount) {
+    return universalTransfer(type, asset, amount, null, null);
   }
 
   // User stream endpoints
