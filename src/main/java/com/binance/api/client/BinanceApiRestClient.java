@@ -1,5 +1,6 @@
 package com.binance.api.client;
 
+import com.binance.api.client.domain.UniversalTransferType;
 import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.*;
 import com.binance.api.client.domain.general.ExchangeInfo;
@@ -345,6 +346,30 @@ public interface BinanceApiRestClient {
    * @param listenKey listen key that identifies a data stream
    */
   void keepAliveUserDataStream(String listenKey);
+
+  /**
+   * Executes a universal coin transfer within accounts on the client
+   *
+   * @param type UniversalTransferType Type of transfer
+   * @param asset Coin to transfer
+   * @param amount Amount to transfer
+   * @param fromSymbol Symbol to transfer from (must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN)
+   * @param toSymbol Symbol to transfer to (must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN)
+   *
+   * @return UniversalTransferResult
+   */
+  UniversalTransferResult universalTransfer(UniversalTransferType type, String asset, String amount, String fromSymbol, String toSymbol);
+
+  /**
+   * Executes a universal coin transfer within accounts on the client
+   *
+   * @param type UniversalTransferType Type of transfer
+   * @param asset Coin to transfer
+   * @param amount Amount to transfer
+   *
+   * @return UniversalTransferResult
+   */
+  UniversalTransferResult universalTransfer(UniversalTransferType type, String asset, String amount);
 
   /**
    * Close out a new user data stream.
