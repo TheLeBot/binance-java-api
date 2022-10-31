@@ -214,8 +214,15 @@ public interface BinanceApiService {
     @POST("/sapi/v1/asset/transfer")
     Call<UniversalTransferResult> universalTransfer(@Query("type") String type, @Query("asset") String asset, @Query("amount") String amount, @Query("fromSymbol") String fromSymbol, @Query("toSymbol") String toSymbol, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
-    // User stream endpoints
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @POST("/sapi/v3/asset/getUserAsset")
+    Call<List<WalletAssetBalance>> getUserAsset(@Query("asset") String asset, @Query("needBtcValuation") Boolean needBtcValuation, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @POST("/sapi/v1/asset/get-funding-asset")
+    Call<List<WalletAssetBalance>> getFundingAsset(@Query("asset") String asset, @Query("needBtcValuation") Boolean needBtcValuation, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+    // User stream endpoints
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
     @POST("/api/v1/userDataStream")
     Call<ListenKey> startUserDataStream();
