@@ -227,6 +227,20 @@ public interface BinanceApiRestClient {
   Account getAccount();
 
   /**
+   * Get a list of current funding account balances (>0)
+   *
+   * @return List<WalletAssetBalance>
+   */
+  List<WalletAssetBalance> getFundingBalances();
+
+  /**
+   * Get a list of current spot account balances (>0)
+   *
+   * @return List<WalletAssetBalance>
+   */
+  List<WalletAssetBalance> getSpotBalances();
+
+  /**
    * Get trades for a specific account and symbol.
    *
    * @param symbol symbol to get trades from
