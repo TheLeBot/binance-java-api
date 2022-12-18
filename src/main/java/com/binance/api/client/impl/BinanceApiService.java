@@ -1,10 +1,7 @@
 package com.binance.api.client.impl;
 
 import com.binance.api.client.constant.BinanceApiConstants;
-import com.binance.api.client.domain.OrderSide;
-import com.binance.api.client.domain.OrderType;
-import com.binance.api.client.domain.SwapRemoveType;
-import com.binance.api.client.domain.TimeInForce;
+import com.binance.api.client.domain.*;
 import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.event.ListenKey;
@@ -221,6 +218,14 @@ public interface BinanceApiService {
     @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
     @POST("/sapi/v1/asset/get-funding-asset")
     Call<List<WalletAssetBalance>> getFundingAsset(@Query("asset") String asset, @Query("needBtcValuation") Boolean needBtcValuation, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @GET("/sapi/v1/asset/transfer")
+    Call<UniversalTransferHistoryResult> getUniversalTransferHistory(@Query("type") UniversalTransferType type,
+                                            @Query("startTime") Long startTime, @Query("endTime") Long endTime,
+                                            @Query("current") Integer current, @Query("size") Integer size,
+                                            @Query("fromSymbol") String fromSymbol, @Query("toSymbol") String toSymbol,
+                                            @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
     // User stream endpoints
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
