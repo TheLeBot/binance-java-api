@@ -386,6 +386,20 @@ public interface BinanceApiRestClient {
   UniversalTransferResult universalTransfer(UniversalTransferType type, String asset, String amount);
 
   /**
+   * Returns a list of universal transfer history objects as a result wrapper
+   *
+   * @param type UniversalTransferType Type of transfer
+   * @param size Maximum number of records to fetch
+   * @param startTime Start time from which to fetch
+   * @param endTime End time till which to fetch
+   * @param fromSymbol Symbol to transfer from (must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN)
+   * @param toSymbol Symbol to transfer to (must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN)
+   *
+   * @return UniversalTransferHistoryResult
+   */
+  UniversalTransferHistoryResult getAccountTransferHistory(UniversalTransferType type, Integer size, Long startTime, Long endTime, String fromSymbol, String toSymbol);
+
+  /**
    * Close out a new user data stream.
    *
    * @param listenKey listen key that identifies a data stream

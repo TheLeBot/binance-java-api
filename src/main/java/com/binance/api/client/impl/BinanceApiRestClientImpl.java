@@ -305,6 +305,11 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
     return universalTransfer(type, asset, amount, null, null);
   }
 
+  @Override
+  public UniversalTransferHistoryResult getAccountTransferHistory(UniversalTransferType type, Integer size, Long startTime, Long endTime, String fromSymbol, String toSymbol) {
+    return executeSync(binanceApiService.getUniversalTransferHistory(type, startTime, endTime, 1, 100, fromSymbol, toSymbol, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+  }
+
   // User stream endpoints
 
   @Override
