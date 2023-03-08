@@ -227,6 +227,15 @@ public interface BinanceApiService {
                                             @Query("fromSymbol") String fromSymbol, @Query("toSymbol") String toSymbol,
                                             @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
+
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @POST("/sapi/v1/asset/dust-btc")
+    Call<DustAssetResult> getDustAssets(@Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @POST("/sapi/v1/asset/dust")
+    Call<DustTransferResult> transferDustToBNB(@Query("asset") String[] asset, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
     // User stream endpoints
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
     @POST("/api/v1/userDataStream")

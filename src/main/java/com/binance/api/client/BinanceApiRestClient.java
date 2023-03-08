@@ -400,6 +400,23 @@ public interface BinanceApiRestClient {
   UniversalTransferHistoryResult getAccountTransferHistory(UniversalTransferType type, Integer size, Long startTime, Long endTime, String fromSymbol, String toSymbol);
 
   /**
+   * Transfers dust assets into BNB and returns an DustTransferResult object
+   *
+   * @param asset Array of assets to transfer
+   *
+   * @return DustTransferResult
+   */
+  DustTransferResult transferDustToBNB(String[] asset);
+
+  /**
+   * Returns dust asset which can be converted as dust into BNB
+   *
+   * @return DustAssetResult
+   */
+  DustAssetResult getDustAssets();
+
+
+  /**
    * Close out a new user data stream.
    *
    * @param listenKey listen key that identifies a data stream
