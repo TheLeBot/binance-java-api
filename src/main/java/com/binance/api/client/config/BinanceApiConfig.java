@@ -46,7 +46,7 @@ public class BinanceApiConfig {
 	 * Asset info base URL.
 	 */
 	public static String getAssetInfoApiBaseUrl() {
-		return String.format("https://%s/", getBaseDomain());
+		return String.format("https://data.%s/", getBaseDomain());
 	}
 
 }
