@@ -1,6 +1,8 @@
 package com.binance.api.client.domain.general;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Filters define trading rules on a symbol or an exchange. Filters come in two forms: symbol filters and exchange filters.
@@ -69,6 +71,12 @@ public class SymbolFilter {
    * Defines the maximum number of "algo" orders an account is allowed to have open on a symbol. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
    */
   private String maxNumAlgoOrders;
+
+  /**
+   * The MAX_NUM_ORDERS filter defines the maximum number of orders an account is allowed to have open on a symbol.
+   * Note that both "algo" orders and normal orders are counted for this filter.
+   */
+  private String maxNumOrders;
 
   /**
    * MAX_NUM_ORDERS filter defines the maximum number of orders an account is allowed to have open on a symbol. Note that both "algo" orders and normal orders are counted for this filter.
@@ -145,6 +153,8 @@ public class SymbolFilter {
     return maxNumAlgoOrders;
   }
 
+  public String getMaxNumOrders() { return maxNumOrders; }
+
   public SymbolFilter setMaxNumAlgoOrders(String maxNumAlgoOrders) {
     this.maxNumAlgoOrders = maxNumAlgoOrders;
     return this;
@@ -160,8 +170,18 @@ public class SymbolFilter {
 
   @Override
   public String toString() {
-    return "SymbolFilter [filterType=" + filterType + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + ", tickSize=" + tickSize
-            + ", minQty=" + minQty + ", maxQty=" + maxQty + ", stepSize=" + stepSize + ", minNotional=" + minNotional
-            + ", maxNumAlgoOrders=" + maxNumAlgoOrders + ", limit=" + limit + "]";
-  }
+      return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+            .append("filterType", filterType)
+            .append("minPrice", minPrice)
+            .append("maxPrice", maxPrice)
+            .append("tickSize", tickSize)
+            .append("minQty", minQty)
+            .append("maxQty", maxQty)
+            .append("stepSize", stepSize)
+            .append("minNotional", minNotional)
+            .append("maxNumAlgoOrders", maxNumAlgoOrders)
+            .append("maxNumOrders", maxNumOrders)
+            .append("limit", limit)
+            .toString();
+     }
 }
