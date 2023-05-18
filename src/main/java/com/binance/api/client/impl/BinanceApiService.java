@@ -64,10 +64,10 @@ public interface BinanceApiService {
     Call<List<Candlestick>> getCandlestickBars(@Query("symbol") String symbol, @Query("interval") String interval, @Query("limit") Integer limit,
                                                @Query("startTime") Long startTime, @Query("endTime") Long endTime);
 
-    @GET("/api/v1/ticker/24hr")
+    @GET("/api/v3/ticker/24hr")
     Call<TickerStatistics> get24HrPriceStatistics(@Query("symbol") String symbol);
 
-    @GET("/api/v1/ticker/24hr")
+    @GET("/api/v3/ticker/24hr")
     Call<List<TickerStatistics>> getAll24HrPriceStatistics();
 
     @GET("/api/v1/ticker/allPrices")

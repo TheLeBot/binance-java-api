@@ -41,14 +41,29 @@ public class TickerStatistics {
   private String lastPrice;
 
   /**
+   * Last quantity
+   */
+  private String lastQty;
+
+  /**
    * Bid price.
    */
   private String bidPrice;
 
   /**
+   * Bid quantity
+   */
+  private String bidQty;
+
+  /**
    * Ask price.
    */
   private String askPrice;
+
+  /**
+   * Ask quantity
+   */
+  private String askQty;
 
   /**
    * Open price 24 hours ago.
@@ -69,6 +84,11 @@ public class TickerStatistics {
    * Total volume during the past 24 hours.
    */
   private String volume;
+
+  /**
+   * Total volume in quote symbol over past 24 hours
+   */
+  private String quoteVolume;
 
   /**
    * Open time.
@@ -135,6 +155,10 @@ public class TickerStatistics {
     this.lastPrice = lastPrice;
   }
 
+  public String getLastQty() { return lastQty; }
+
+  public void setLastQty(String pLastQty) { lastQty = pLastQty; }
+
   public String getBidPrice() {
     return bidPrice;
   }
@@ -143,6 +167,10 @@ public class TickerStatistics {
     this.bidPrice = bidPrice;
   }
 
+  public String getBidQty() { return bidQty; }
+
+  public void setBidQty(String pBidQty) { bidQty = pBidQty; }
+
   public String getAskPrice() {
     return askPrice;
   }
@@ -150,6 +178,10 @@ public class TickerStatistics {
   public void setAskPrice(String askPrice) {
     this.askPrice = askPrice;
   }
+
+  public String getAskQty() { return askQty; }
+
+  public void setAskQty(String pAskQty) { askQty =  pAskQty; }
 
   public String getOpenPrice() {
     return openPrice;
@@ -182,6 +214,10 @@ public class TickerStatistics {
   public void setVolume(String volume) {
     this.volume = volume;
   }
+
+  public String getQuoteVolume() { return quoteVolume; }
+
+  public void setQuoteVolume(String psQuoteVolume) { quoteVolume = psQuoteVolume; }
 
   public long getOpenTime() {
     return openTime;
@@ -240,12 +276,16 @@ public class TickerStatistics {
         .append("weightedAvgPrice", weightedAvgPrice)
         .append("prevClosePrice", prevClosePrice)
         .append("lastPrice", lastPrice)
+        .append("lastQty", lastQty)
         .append("bidPrice", bidPrice)
+        .append("bidQty", bidQty)
         .append("askPrice", askPrice)
+        .append("askQty", askQty)
         .append("openPrice", openPrice)
         .append("highPrice", highPrice)
         .append("lowPrice", lowPrice)
         .append("volume", volume)
+        .append("quoteVolume", quoteVolume)
         .append("openTime", openTime)
         .append("closeTime", closeTime)
         .append("firstId", firstId)
