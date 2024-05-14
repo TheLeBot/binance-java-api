@@ -66,6 +66,14 @@ public interface BinanceApiWebSocketClient extends Closeable {
     Closeable onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback);
 
     /**
+     * Open a new web socket to receive {@link AllMarketRollingWindowEvent allMarketRollingWindowEvents} on a callback.
+     * @param psWindowSize Window size 1h,4h,1d
+     * @param callback the callback to call on new events
+     * @return a {@link Closeable} that allows the underlying web socket to be closed.
+     */
+    Closeable onAllMarketRollingWindowEvent(String psWindowSize, BinanceApiCallback<List<AllMarketRollingWindowEvent>> callback);
+
+    /**
      * Open a new web socket to receive {@link BookTickerEvent bookTickerEvents} on a callback.
      *
      * @param symbols   market (one or coma-separated) symbol(s) to subscribe to
@@ -74,9 +82,4 @@ public interface BinanceApiWebSocketClient extends Closeable {
      */
     Closeable onBookTickerEvent(String symbols, BinanceApiCallback<BookTickerEvent> callback);
 
-    /**
-     * @deprecated This method is no longer functional. Please use the returned {@link Closeable} from any of the other methods to close the web socket.
-     */
-    @Deprecated
-    void close();
 }
