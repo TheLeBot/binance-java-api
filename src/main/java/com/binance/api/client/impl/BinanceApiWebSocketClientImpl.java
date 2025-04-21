@@ -3,7 +3,6 @@ package com.binance.api.client.impl;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.config.BinanceApiConfig;
-import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.event.*;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,6 +15,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -24,8 +24,12 @@ import java.util.stream.Collectors;
 public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient {
 
     private final OkHttpClient client;
+    private static OkHttpClient.Builder webSocketClientBuilder;
 
     public BinanceApiWebSocketClientImpl(OkHttpClient client) {
+        webSocketClientBuilder = client.newBuilder();
+        client = webSocketClientBuilder.pingInterval(1, TimeUnit.MINUTES)
+                .build();
         this.client = client;
     }
 
@@ -101,6 +105,7 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient 
     private Closeable createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
         String streamingUrl = String.format("%s/%s", BinanceApiConfig.getStreamApiBaseUrl(), channel);
         Request request = new Request.Builder().url(streamingUrl).build();
+
         final WebSocket webSocket = client.newWebSocket(request, listener);
         return () -> {
             final int code = 1000;
