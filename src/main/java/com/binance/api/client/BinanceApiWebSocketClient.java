@@ -66,6 +66,15 @@ public interface BinanceApiWebSocketClient extends Closeable {
     Closeable onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback);
 
     /**
+     * Open a new web socket to receive {@link MiniTickerEvent miniTickerEvent} on a callback.
+     *
+     * @param callback the callback to call on new events
+     * @return a {@link Closeable} that allows the underlying web socket to be closed.
+     */
+    Closeable onAllMarketMiniTickersEvent(BinanceApiCallback<List<MiniTickerEvent>> callback);
+
+
+    /**
      * Open a new web socket to receive {@link AllMarketRollingWindowEvent allMarketRollingWindowEvents} on a callback.
      * @param psWindowSize Window size 1h,4h,1d
      * @param callback the callback to call on new events

@@ -80,6 +80,13 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient 
         return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, new TypeReference<List<AllMarketTickersEvent>>() {}));
     }
 
+    @Override
+    public Closeable onAllMarketMiniTickersEvent(BinanceApiCallback<List<MiniTickerEvent>> callback) {
+        final String channel = "!miniTicker@arr";
+        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, new TypeReference<List<MiniTickerEvent>>() {}));
+    }
+
+
     /**
      * Open a new web socket to receive {@link AllMarketRollingWindowEvent allMarketRollingWindowEvents} on a callback.
      *
