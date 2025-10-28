@@ -6,7 +6,9 @@
 
   <groupId>com.binance.api</groupId>
   <artifactId>binance-api-client</artifactId>
-  <version>1.0.21</version>
+  <version>1.0.22</version>
+  <packaging>jar</packaging>
+
   <licenses>
     <license>
       <name>The MIT License</name>
