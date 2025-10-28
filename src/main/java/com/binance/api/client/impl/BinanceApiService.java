@@ -32,13 +32,13 @@ public interface BinanceApiService {
 
     // General endpoints
 
-    @GET("/api/v1/ping")
+    @GET("/api/v3/ping")
     Call<Void> ping();
 
-    @GET("/api/v1/time")
+    @GET("/api/v3/time")
     Call<ServerTime> getServerTime();
 
-    @GET("/api/v1/exchangeInfo")
+    @GET("/api/v3/exchangeInfo")
     Call<ExchangeInfo> getExchangeInfo();
 
     @GET
@@ -46,21 +46,21 @@ public interface BinanceApiService {
 
     // Market data endpoints
 
-    @GET("/api/v1/depth")
+    @GET("/api/v3/depth")
     Call<OrderBook> getOrderBook(@Query("symbol") String symbol, @Query("limit") Integer limit);
 
-    @GET("/api/v1/trades")
+    @GET("/api/v3/trades")
     Call<List<TradeHistoryItem>> getTrades(@Query("symbol") String symbol, @Query("limit") Integer limit);
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
-    @GET("/api/v1/historicalTrades")
+    @GET("/api/v3/historicalTrades")
     Call<List<TradeHistoryItem>> getHistoricalTrades(@Query("symbol") String symbol, @Query("limit") Integer limit, @Query("fromId") Long fromId);
 
-    @GET("/api/v1/aggTrades")
+    @GET("/api/v3/aggTrades")
     Call<List<AggTrade>> getAggTrades(@Query("symbol") String symbol, @Query("fromId") String fromId, @Query("limit") Integer limit,
                                       @Query("startTime") Long startTime, @Query("endTime") Long endTime);
 
-    @GET("/api/v1/klines")
+    @GET("/api/v3/klines")
     Call<List<Candlestick>> getCandlestickBars(@Query("symbol") String symbol, @Query("interval") String interval, @Query("limit") Integer limit,
                                                @Query("startTime") Long startTime, @Query("endTime") Long endTime);
 

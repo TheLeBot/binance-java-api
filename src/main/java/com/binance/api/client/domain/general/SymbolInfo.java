@@ -29,6 +29,8 @@ public class SymbolInfo {
 
   private boolean icebergAllowed;
 
+  private List<Permissions> permissions;
+
   private List<SymbolFilter> filters;
 
   public String getSymbol() {
@@ -95,6 +97,10 @@ public class SymbolInfo {
     this.icebergAllowed = icebergAllowed;
   }
 
+  public List<Permissions> getPermissions() { return permissions; }
+
+  public void setPermissions(List<Permissions> permissions) { this.permissions = permissions; }
+
   public List<SymbolFilter> getFilters() {
     return filters;
   }
@@ -126,6 +132,7 @@ public class SymbolInfo {
         .append("orderTypes", orderTypes)
         .append("icebergAllowed", icebergAllowed)
         .append("filters", filters)
+        .append("permissions", permissions)
         .toString();
   }
 }
