@@ -148,7 +148,7 @@ public interface BinanceApiAsyncRestClient {
    * @param symbol ticker symbol (e.g. ETHBTC)
    * @param callback the callback that handles the response
    */
-   void getPrice(String symbol , BinanceApiCallback<TickerPrice> callback);
+   void getPrice(String symbol , BinanceApiCallback<List<TickerPrice>> callback);
 
   /**
    * Get best price/qty on the order book for all symbols (asynchronous).

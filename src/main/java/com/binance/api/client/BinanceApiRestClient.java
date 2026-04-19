@@ -126,16 +126,16 @@ public interface BinanceApiRestClient {
   List<TickerStatistics> getAll24HrPriceStatistics();
 
   /**
-   * Get Latest price for all symbols.
-   */
-  List<TickerPrice> getAllPrices();
-
-  /**
-   * Get latest price for <code>symbol</code>.
+   * Get latest prices for <code>symbol</code> or for all symbols if null.
    *
    * @param symbol ticker symbol (e.g. ETHBTC)
    */
   TickerPrice getPrice(String symbol);
+
+  /**
+   * Get all the latest prices for all symbols
+   */
+  List<TickerPrice> getAllPrices();
 
   /**
    * Get best price/qty on the order book for all symbols.
